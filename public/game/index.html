@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chicken Road Game</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(180deg, #87CEEB 0%, #228B22 60%, #2a2a2a 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+    
+    .game-container {
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .game-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .chicken {
+      font-size: 5rem;
+      animation: bounce 0.5s ease-in-out infinite;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .score {
+      font-size: 3rem;
+      margin: 2rem 0;
+      font-weight: bold;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+    
+    .info {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 1rem;
+    }
+    
+    .timer {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+    
+    /* Placeholder - замените на вашу настоящую игру */
+    .placeholder-note {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(255, 193, 7, 0.9);
+      color: #000;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-size: 0.9rem;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Placeholder note -->
+  <div class="placeholder-note">
+    <strong>⚠️ Это placeholder!</strong><br>
+    Замените этот файл на вашу настоящую игру Chicken Road
+  </div>
+  
+  <div class="game-container">
+    <h1 class="game-title">Chicken Road</h1>
+    <div class="chicken" id="chicken">🐔</div>
+    <div class="score" id="score">0</div>
+    <div class="info">Кликай на курочку!</div>
+    <div class="timer" id="timer">0с</div>
+  </div>
+
+  <script>
+    // ========================================
+    // ПРИМЕР ИНТЕГРАЦИИ С ЛЕНДИНГОМ
+    // ========================================
+    
+    let score = 0;
+    let gameTime = 0;
+    let gameStarted = false;
+    let ctaShown = false;
+    
+    const scoreEl = document.getElementById('score');
+    const timerEl = document.getElementById('timer');
+    const chickenEl = document.getElementById('chicken');
+    
+    // Отправка события родительскому окну
+    function sendToParent(type, data = {}) {
+      window.parent.postMessage({
+        type,
+        ...data
+      }, '*');
+    }
+    
+    // Старт игры
+    function startGame() {
+      if (gameStarted) return;
+      gameStarted = true;
+      sendToParent('GAME_START');
+      
+      // Таймер
+      setInterval(() => {
+        gameTime++;
+        timerEl.textContent = `${gameTime}с`;
+        
+        // Показываем CTA через 15 секунд
+        if (gameTime === 15 && !ctaShown) {
+          showCTA();
+        }
+      }, 1000);
+    }
+    
+    // Клик по курочке
+    chickenEl.addEventListener('click', () => {
+      if (!gameStarted) startGame();
+      
+      score++;
+      scoreEl.textContent = score;
+      
+      // Показываем CTA при определенном score
+      if (score === 10 && !ctaShown) {
+        showCTA();
+      }
+      
+      // Анимация клика
+      chickenEl.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        chickenEl.style.transform = '';
+      }, 100);
+    });
+    
+    // Показываем CTA модалку на лендинге
+    function showCTA() {
+      if (ctaShown) return;
+      ctaShown = true;
+      
+      sendToParent('SHOW_CTA', {
+        score: score,
+        time: gameTime,
+        level: Math.floor(score / 5) + 1
+      });
+      
+      console.log('📢 CTA triggered!', { score, time: gameTime });
+    }
+    
+    // Слушаем команды от лендинга
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'CONTINUE_GAME') {
+        console.log('▶️ Game continued');
+        // Здесь можно продолжить игру если нужно
+      }
+    });
+    
+    // ========================================
+    // ЗАМЕНИТЕ ЭТОТ КОД НА ВАШУ ИГРУ!
+    // ========================================
+    
+    console.log('🎮 Chicken Road Placeholder Game');
+    console.log('📝 Замените этот файл на вашу настоящую игру');
+    console.log('💡 Используйте sendToParent() для отправки событий');
+  </script>
+</body>
+</html>
+
+
