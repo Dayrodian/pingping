@@ -541,7 +541,7 @@ img {
 
 .hero {
   position: relative;
-  padding: clamp(7rem, 14vh, 9rem) 0 var(--space-xl);
+  padding: clamp(7rem, 14vh, 9rem) 0 clamp(3rem, 6vh, 4rem);
   overflow: hidden;
   isolation: isolate;
 }
@@ -552,7 +552,7 @@ img {
 
 .promo-section {
   position: relative;
-  padding: var(--space-2xl) 0;
+  padding: clamp(3rem, 6vh, 4rem) 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -947,7 +947,7 @@ img {
    ============================================ */
 
 .platforms {
-  padding: clamp(4rem, 8vh, 6rem) 0 clamp(5rem, 10vh, 7rem);
+  padding: clamp(3rem, 6vh, 4rem) 0;
   background: linear-gradient(
     180deg, 
     rgba(255, 255, 255, 0) 0%, 
@@ -959,64 +959,12 @@ img {
   overflow: visible;
 }
 
-/* Декоративные элементы */
-.platforms::before,
-.platforms::after {
-  content: '';
-  position: absolute;
-  width: clamp(20rem, 40vw, 30rem);
-  height: clamp(20rem, 40vw, 30rem);
-  border-radius: 50%;
-  filter: blur(clamp(3rem, 6vw, 5rem));
-  opacity: 0.1;
-  pointer-events: none;
-  animation: float-slow 20s ease-in-out infinite;
-}
-
-.platforms::before {
-  background: radial-gradient(circle, var(--primary-orange) 0%, transparent 70%);
-  top: -10%;
-  left: -10%;
-}
-
-.platforms::after {
-  background: radial-gradient(circle, var(--primary-yellow) 0%, transparent 70%);
-  bottom: -10%;
-  right: -10%;
-  animation-delay: -10s;
-}
-
-@keyframes float-slow {
-  0%, 100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(clamp(1rem, 2vw, 2rem), clamp(1rem, 2vw, 2rem)) scale(1.1);
-  }
-}
+/* Декоративные элементы удалены для чистого дизайна */
 
 /* Header */
 .platforms__header {
   text-align: center;
   margin-bottom: clamp(2.5rem, 5vh, 3.5rem);
-}
-
-.platforms__badge {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--primary-yellow) 0%, var(--primary-orange) 100%);
-  color: var(--text-dark);
-  font-family: var(--font-body);
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  font-weight: 700;
-  padding: clamp(0.375rem, 0.75vw, 0.5rem) clamp(1rem, 2vw, 1.5rem);
-  border-radius: var(--radius-full);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  box-shadow: 
-    0 clamp(0.25rem, 0.5vw, 0.5rem) clamp(1rem, 2vw, 1.5rem) rgba(255, 193, 7, 0.3),
-    inset 0 clamp(0.0625rem, 0.1vw, 0.125rem) clamp(0.125rem, 0.25vw, 0.25rem) rgba(255, 255, 255, 0.5);
-  margin-bottom: var(--space-md);
-  animation: pulse-glow 3s ease-in-out infinite;
 }
 
 .platforms__title {
@@ -1371,7 +1319,7 @@ img {
    ============================================ */
 
 .gallery {
-  padding: clamp(4rem, 8vh, 6rem) 0;
+  padding: clamp(3rem, 6vh, 4rem) 0;
   background: linear-gradient(
     180deg, 
     rgba(255, 255, 255, 0) 0%, 
@@ -1379,7 +1327,8 @@ img {
     rgba(255, 255, 255, 0) 100%
   );
   position: relative;
-  overflow: visible;
+  overflow-x: hidden; /* Скрываем горизонтальный scroll */
+  overflow-y: visible; /* Разрешаем вертикальное свечение */
 }
 
 /* Header */
@@ -1390,19 +1339,7 @@ img {
 }
 
 .gallery__badge {
-  display: inline-block;
-  padding: clamp(0.5rem, 1vw, 0.625rem) clamp(1rem, 2vw, 1.25rem);
-  background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 87, 34, 0.15) 100%);
-  border: clamp(0.0625rem, 0.1vw, 0.075rem) solid rgba(255, 193, 7, 0.3);
-  border-radius: var(--radius-full);
-  font-family: var(--font-body);
-  font-size: clamp(0.8rem, 1.6vw, 0.9rem);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--primary-orange);
-  margin-bottom: clamp(0.75rem, 1.5vh, 1rem);
-  animation: pulse-glow 3s ease-in-out infinite;
+  display: none; /* Скрыт блок "ПРИМЕРЫ РАБОТ" */
 }
 
 .gallery__title {
@@ -1424,9 +1361,10 @@ img {
 .gallery__carousel {
   position: relative;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: visible;
-  padding: clamp(2rem, 4vh, 3rem) 0;
+  overflow: visible; /* Чтобы стрелки и свечение не обрезались */
+  padding: clamp(2rem, 4vh, 3rem) clamp(3rem, 6vw, 5rem);
+  /* Важно: не обрезаем содержимое */
+  contain: layout style; /* Вместо содержания используем только layout */
 }
 
 /* Navigation Buttons */
@@ -1478,11 +1416,11 @@ img {
 }
 
 .gallery__nav--prev {
-  left: clamp(-1rem, -2vw, -1.5rem);
+  left: clamp(0.5rem, 1vw, 1rem); /* Сдвинут внутрь, чтобы не обрезался */
 }
 
 .gallery__nav--next {
-  right: clamp(-1rem, -2vw, -1.5rem);
+  right: clamp(2.5rem, 5vw, 4rem); /* Сдвинут левее, чтобы не пересекался со scroll-bar */
 }
 
 .gallery__nav svg {
@@ -1493,13 +1431,18 @@ img {
 /* Track - Manual Control */
 .gallery__track {
   display: flex;
-  gap: clamp(1.5rem, 3vw, 2rem);
+  gap: clamp(1.5rem, 2.5vw, 2rem);
   scroll-behavior: smooth;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow-x: auto; /* Горизонтальный скролл */
+  overflow-y: visible; /* Вертикально видимо для свечения */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
-  padding: clamp(1rem, 2vh, 1.5rem) clamp(2rem, 4vw, 3rem);
+  padding: clamp(2rem, 4vh, 3rem) clamp(2rem, 3.5vw, 3rem);
+  /* Убираем clip, чтобы не обрезались элементы */
+  clip-path: none;
+  /* Scroll Snap для точного позиционирования карточек без обрезания */
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: clamp(2rem, 3.5vw, 3rem); /* Отступ от края = padding */
 }
 
 .gallery__track::-webkit-scrollbar {
@@ -1509,11 +1452,14 @@ img {
 /* Gallery Item */
 .gallery__item {
   flex-shrink: 0;
-  width: clamp(16rem, 32vw, 22rem);
+  width: clamp(16rem, 26vw, 20rem); /* Ровно 3 карточки на десктопе без обрезания */
   display: flex;
   flex-direction: column;
   gap: clamp(0.75rem, 1.5vh, 1rem);
   position: relative;
+  /* Scroll Snap для точного выравнивания без обрезания */
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Iframe Wrapper */
@@ -1523,19 +1469,17 @@ img {
   aspect-ratio: 9 / 16;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 
-    0 clamp(0.25rem, 0.5vw, 0.5rem) clamp(1rem, 2vw, 1.5rem) rgba(0, 0, 0, 0.08),
-    0 clamp(0.5rem, 1vw, 1rem) clamp(2rem, 4vw, 3rem) rgba(0, 0, 0, 0.04);
+  box-shadow: none; /* Убрана тень */
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(135deg, rgba(255, 249, 235, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
 }
 
+/* Hover состояние */
 .gallery__item:hover .gallery__iframe-wrapper {
   transform: translateY(clamp(-0.25rem, -0.5vw, -0.5rem)) scale(1.02);
-  box-shadow: 
-    0 clamp(0.5rem, 1vw, 1rem) clamp(2rem, 4vw, 3rem) rgba(255, 193, 7, 0.2),
-    0 clamp(1rem, 2vw, 2rem) clamp(3rem, 6vw, 4rem) rgba(255, 87, 34, 0.15);
+  box-shadow: none; /* Без тени даже при hover */
 }
+
 
 /* Iframe */
 .gallery__iframe {
@@ -1544,6 +1488,30 @@ img {
   border: none;
   display: block;
   background: white;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery__item[data-loaded="true"] .gallery__iframe {
+  opacity: 1;
+}
+
+/* Preview Image */
+.gallery__preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.95; /* 95% прозрачность для видимости на белом фоне */
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.gallery__item[data-loaded="true"] .gallery__preview {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Play Overlay */
@@ -1558,14 +1526,10 @@ img {
   align-items: center;
   justify-content: center;
   gap: clamp(0.75rem, 1.5vh, 1rem);
-  background: linear-gradient(
-    135deg,
-    rgba(255, 249, 235, 0.95) 0%,
-    rgba(255, 255, 255, 0.95) 100%
-  );
+  background: transparent; /* Прозрачный, чтобы видеть превью */
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 2;
+  z-index: 3; /* Выше превью */
 }
 
 .gallery__item[data-loaded="true"] .gallery__play-overlay {
@@ -1574,11 +1538,7 @@ img {
 }
 
 .gallery__play-overlay:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 249, 235, 0.98) 0%,
-    rgba(255, 255, 255, 0.98) 100%
-  );
+  background: rgba(0, 0, 0, 0.1); /* Легкое затемнение при hover */
 }
 
 /* Play Button */
@@ -1621,6 +1581,7 @@ img {
 
 /* Play Text */
 .gallery__play-text {
+  display: none; /* Скрываем текст "Нажмите чтобы играть" */
   font-size: clamp(0.875rem, 1.75vw, 1rem);
   font-weight: 600;
   color: var(--text-dark);
@@ -1715,7 +1676,7 @@ img {
   
   /* Gallery Mobile */
   .gallery__item {
-    width: clamp(14rem, 45vw, 18rem);
+    width: clamp(13rem, 42vw, 17rem); /* Уменьшено для планшетов: 2 карточки без обрезания */
   }
   
   .gallery__track {
@@ -1728,18 +1689,18 @@ img {
   }
   
   .gallery__nav--prev {
-    left: clamp(-0.75rem, -1.5vw, -1rem);
+    left: clamp(0.25rem, 0.5vw, 0.5rem);
   }
   
   .gallery__nav--next {
-    right: clamp(-0.75rem, -1.5vw, -1rem);
+    right: clamp(2rem, 4vw, 3rem);
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
   .hero {
-    padding: clamp(6rem, 12vh, 8rem) 0 var(--space-2xl);
+    padding: clamp(6rem, 12vh, 8rem) 0 clamp(2.5rem, 5vh, 3.5rem);
   }
   
   .hero__stats {
@@ -1759,7 +1720,7 @@ img {
   
   /* Gallery Small Mobile */
   .gallery__item {
-    width: clamp(12rem, 60vw, 16rem);
+    width: clamp(15rem, 82vw, 19rem); /* Уменьшено для мобильных: 1 карточка без обрезания */
   }
   
   .gallery__track {
@@ -1773,11 +1734,11 @@ img {
   }
   
   .gallery__nav--prev {
-    left: clamp(-0.5rem, -1vw, -0.75rem);
+    left: clamp(0.125rem, 0.25vw, 0.25rem);
   }
   
   .gallery__nav--next {
-    right: clamp(-0.5rem, -1vw, -0.75rem);
+    right: clamp(1.5rem, 3vw, 2rem);
   }
   
   .gallery__play-button {

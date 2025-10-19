@@ -464,11 +464,25 @@ function initGallery() {
   }
   
   let currentIndex = 0;
+  let isProgrammaticScroll = false; // Флаг для отслеживания программного скролла
+  
+  // Обновление состояния кнопок (определяем заранее для использования в scrollToItem)
+  function updateNavButtons() {
+    if (prevBtn) {
+      prevBtn.disabled = currentIndex === 0;
+      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+    }
+    if (nextBtn) {
+      nextBtn.disabled = currentIndex === galleryItems.length - 1;
+      nextBtn.style.opacity = currentIndex === galleryItems.length - 1 ? '0.5' : '1';
+    }
+  }
   
   // Функция для прокрутки к нужному элементу
   function scrollToItem(index: number) {
     const item = galleryItems[index] as HTMLElement;
     if (item) {
+      isProgrammaticScroll = true; // Помечаем, что скролл программный
       const scrollLeft = item.offsetLeft - galleryTrack.offsetLeft - 
                         parseInt(window.getComputedStyle(galleryTrack).paddingLeft);
       galleryTrack.scrollTo({
@@ -476,7 +490,13 @@ function initGallery() {
         behavior: 'smooth'
       });
       currentIndex = index;
+      updateNavButtons(); // Обновляем кнопки сразу
       trackEvent('Gallery', 'navigate', `Item ${index + 1}`);
+      
+      // Сбрасываем флаг после завершения анимации скролла
+      setTimeout(() => {
+        isProgrammaticScroll = false;
+      }, 600);
     }
   }
   
@@ -498,25 +518,44 @@ function initGallery() {
     });
   }
   
-  // Обновление состояния кнопок
-  function updateNavButtons() {
-    if (prevBtn) {
-      prevBtn.disabled = currentIndex === 0;
-      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-    }
-    if (nextBtn) {
-      nextBtn.disabled = currentIndex === galleryItems.length - 1;
-      nextBtn.style.opacity = currentIndex === galleryItems.length - 1 ? '0.5' : '1';
-    }
-  }
-  
   // Инициализация состояния кнопок
   updateNavButtons();
   
-  // Lazy Loading для iframe
+  // Функция для закрытия всех игр кроме текущей
+  function closeAllGamesExcept(currentItem: Element) {
+    galleryItems.forEach((item) => {
+      if (item !== currentItem && item.getAttribute('data-loaded') === 'true') {
+        const iframe = item.querySelector('.gallery__iframe') as HTMLIFrameElement;
+        const overlay = item.querySelector('.gallery__play-overlay') as HTMLElement;
+        const preview = item.querySelector('.gallery__preview') as HTMLImageElement;
+        
+        if (iframe) {
+          // Останавливаем игру и сбрасываем src
+          iframe.src = '';
+          item.setAttribute('data-loaded', 'false');
+        }
+        
+        // Показываем обратно превью и overlay
+        if (overlay) {
+          overlay.style.display = 'flex';
+          overlay.style.opacity = '1';
+        }
+        
+        if (preview) {
+          preview.style.opacity = '1';
+          preview.style.pointerEvents = 'all';
+        }
+        
+        console.log(`🛑 Closed game in item`);
+      }
+    });
+  }
+  
+  // Lazy Loading для iframe с ограничением на 1 активную игру
   galleryItems.forEach((item, index) => {
     const iframe = item.querySelector('.gallery__iframe') as HTMLIFrameElement;
     const overlay = item.querySelector('.gallery__play-overlay') as HTMLElement;
+    const preview = item.querySelector('.gallery__preview') as HTMLImageElement;
     const label = item.querySelector('.gallery__label');
     const dataSrc = iframe?.getAttribute('data-src');
     
@@ -526,8 +565,14 @@ function initGallery() {
     overlay.addEventListener('click', (e) => {
       e.stopPropagation();
       
-      // Устанавливаем src для загрузки iframe
-      if (!iframe.src) {
+      // ВАЖНО: Закрываем все остальные игры перед открытием новой
+      closeAllGamesExcept(item);
+      
+      // Проверяем, не загружена ли уже эта игра
+      const isLoaded = item.getAttribute('data-loaded') === 'true';
+      
+      if (!isLoaded) {
+        // Загружаем игру
         iframe.src = dataSrc;
         item.setAttribute('data-loaded', 'true');
         
@@ -535,7 +580,7 @@ function initGallery() {
         trackEvent('Gallery', 'play', gameTitle);
         console.log(`🎮 Game loaded and started: ${gameTitle}`);
         
-        // Плавное исчезновение overlay
+        // Плавное исчезновение overlay и preview
         setTimeout(() => {
           overlay.style.opacity = '0';
           setTimeout(() => {
@@ -549,17 +594,20 @@ function initGallery() {
   // Обновляем текущий индекс при ручной прокрутке
   let scrollTimeout: ReturnType<typeof setTimeout>;
   galleryTrack.addEventListener('scroll', () => {
+    // Игнорируем обновление индекса, если скролл программный (от кнопок)
+    if (isProgrammaticScroll) return;
+    
     clearTimeout(scrollTimeout);
     scrollTimeout = setTimeout(() => {
-      // Определяем, какой элемент сейчас ближе всего к центру
-      const trackCenter = galleryTrack.scrollLeft + galleryTrack.offsetWidth / 2;
+      // Определяем, какой элемент сейчас ближе всего к началу viewport
+      const scrollLeft = galleryTrack.scrollLeft;
       let closestIndex = 0;
       let closestDistance = Infinity;
       
       galleryItems.forEach((item, index) => {
         const itemElement = item as HTMLElement;
-        const itemCenter = itemElement.offsetLeft + itemElement.offsetWidth / 2 - galleryTrack.offsetLeft;
-        const distance = Math.abs(trackCenter - itemCenter);
+        const itemLeft = itemElement.offsetLeft - galleryTrack.offsetLeft;
+        const distance = Math.abs(scrollLeft - itemLeft);
         
         if (distance < closestDistance) {
           closestDistance = distance;
@@ -569,10 +617,11 @@ function initGallery() {
       
       currentIndex = closestIndex;
       updateNavButtons();
-    }, 150);
+    }, 50); // Уменьшена задержка для быстрого отклика кнопок
   });
   
-  console.log(`🎮 Gallery initialized with ${galleryItems.length} examples (manual navigation + lazy load)`);
+  console.log(`🎮 Gallery initialized with ${galleryItems.length} examples`);
+  console.log('✅ Features: Preview images, One active iframe limit, Lazy loading');
 }
 
 // ============================================

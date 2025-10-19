@@ -51,7 +51,7 @@
             </div>
             
             <nav class="header__nav">
-              <a href="#features" class="nav__link">Возможности</a>
+              <a href="#platforms" class="nav__link">Возможности</a>
               <a href="#gallery" class="nav__link">Примеры</a>
               <a href="#pricing" class="nav__link">Тарифы</a>
               <a href="#faq" class="nav__link">FAQ</a>
@@ -75,7 +75,7 @@
         <div class="mobile-menu__content">
           <button class="mobile-menu__close" id="mobileMenuClose">×</button>
           <nav class="mobile-menu__nav">
-            <a href="#features" class="mobile-menu__link">Возможности</a>
+            <a href="#platforms" class="mobile-menu__link">Возможности</a>
             <a href="#gallery" class="mobile-menu__link">Примеры</a>
             <a href="#pricing" class="mobile-menu__link">Тарифы</a>
             <a href="#faq" class="mobile-menu__link">FAQ</a>
@@ -199,11 +199,149 @@
         </div>
       </section>
 
+      <!-- Gallery Section -->
+      <section class="gallery" id="gallery">
+        <div class="container">
+          <!-- Header -->
+          <div class="gallery__header">
+            <span class="gallery__badge">🎮 ПРИМЕРЫ РАБОТ</span>
+            <h2 class="gallery__title">Наши плейблы в действии</h2>
+            <p class="gallery__subtitle">Попробуйте поиграть прямо сейчас</p>
+          </div>
+
+          <!-- Carousel -->
+          <div class="gallery__carousel">
+            <!-- Navigation Buttons -->
+            <button class="gallery__nav gallery__nav--prev" aria-label="Previous">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="gallery__nav gallery__nav--next" aria-label="Next">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </button>
+            
+            <div class="gallery__track">
+              <!-- Пример 1 -->
+              <div class="gallery__item" data-loaded="false">
+                <div class="gallery__iframe-wrapper">
+                  <iframe 
+                    data-src="https://stellular-syrniki-3e95d4.netlify.app/" 
+                    title="Chicken Road - Example 1"
+                    class="gallery__iframe"
+                    allowfullscreen
+                  ></iframe>
+                  <img 
+                    src="/images/gallery/preview_1.png" 
+                    alt="Chicken Road Classic Preview" 
+                    class="gallery__preview"
+                  />
+                  <div class="gallery__play-overlay">
+                    <div class="gallery__play-button">▶</div>
+                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
+                  </div>
+                </div>
+                <span class="gallery__label">Chicken Road Classic</span>
+              </div>
+              
+              <!-- Пример 2 -->
+              <div class="gallery__item" data-loaded="false">
+                <div class="gallery__iframe-wrapper">
+                  <iframe 
+                    data-src="https://quiet-tanuki-d85533.netlify.app/" 
+                    title="Chicken Road - Example 2"
+                    class="gallery__iframe"
+                    allowfullscreen
+                  ></iframe>
+                  <img 
+                    src="/images/gallery/preview_2.png" 
+                    alt="Chicken Road v2 Preview" 
+                    class="gallery__preview"
+                  />
+                  <div class="gallery__play-overlay">
+                    <div class="gallery__play-button">▶</div>
+                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
+                  </div>
+                </div>
+                <span class="gallery__label">Chicken Road v2</span>
+              </div>
+              
+              <!-- Пример 3 -->
+              <div class="gallery__item" data-loaded="false">
+                <div class="gallery__iframe-wrapper">
+                  <iframe 
+                    data-src="https://incomparable-dragon-1d5660.netlify.app/" 
+                    title="Chicken Road - Example 3"
+                    class="gallery__iframe"
+                    allowfullscreen
+                  ></iframe>
+                  <img 
+                    src="/images/gallery/Preview_3.png" 
+                    alt="Chicken Road Pro Preview" 
+                    class="gallery__preview"
+                  />
+                  <div class="gallery__play-overlay">
+                    <div class="gallery__play-button">▶</div>
+                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
+                  </div>
+                </div>
+                <span class="gallery__label">Chicken Road Pro</span>
+              </div>
+              
+              <!-- Пример 4 -->
+              <div class="gallery__item" data-loaded="false">
+                <div class="gallery__iframe-wrapper">
+                  <iframe 
+                    data-src="https://melodious-tartufo-9cd79f.netlify.app/" 
+                    title="Chicken Road - Example 4"
+                    class="gallery__iframe"
+                    allowfullscreen
+                  ></iframe>
+                  <img 
+                    src="/images/gallery/preview_4.png" 
+                    alt="Chicken Road Plus Preview" 
+                    class="gallery__preview"
+                  />
+                  <div class="gallery__play-overlay">
+                    <div class="gallery__play-button">▶</div>
+                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
+                  </div>
+                </div>
+                <span class="gallery__label">Chicken Road Plus</span>
+              </div>
+              
+              <!-- Пример 5 -->
+              <div class="gallery__item" data-loaded="false">
+                <div class="gallery__iframe-wrapper">
+                  <iframe 
+                    data-src="https://chimerical-chimera-147208.netlify.app/" 
+                    title="Chicken Road - Example 5"
+                    class="gallery__iframe"
+                    allowfullscreen
+                  ></iframe>
+                  <img 
+                    src="/images/gallery/Preview_5.png" 
+                    alt="Chicken Road Deluxe Preview" 
+                    class="gallery__preview"
+                  />
+                  <div class="gallery__play-overlay">
+                    <div class="gallery__play-button">▶</div>
+                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
+                  </div>
+                </div>
+                <span class="gallery__label">Chicken Road Deluxe</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Platforms Section -->
-      <section class="platforms">
+      <section class="platforms" id="platforms">
         <div class="container">
           <div class="platforms__header">
-            <div class="platforms__badge">🚀 Совместимость</div>
             <h2 class="platforms__title">Интегрируется со всеми платформами</h2>
             <p class="platforms__subtitle">Готовые адаптеры для ведущих рекламных сетей</p>
           </div>
@@ -321,116 +459,6 @@
                 <span class="feature-tag">Рулетка бонусов</span>
                 <span class="feature-tag">Стиль люков</span>
                 <span class="feature-tag feature-tag--special">Полностью кастомный плейбл</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Gallery Section -->
-      <section class="gallery" id="gallery">
-        <div class="container">
-          <!-- Header -->
-          <div class="gallery__header">
-            <span class="gallery__badge">🎮 ПРИМЕРЫ РАБОТ</span>
-            <h2 class="gallery__title">Наши плейблы в действии</h2>
-            <p class="gallery__subtitle">Попробуйте поиграть прямо сейчас</p>
-          </div>
-
-          <!-- Carousel -->
-          <div class="gallery__carousel">
-            <!-- Navigation Buttons -->
-            <button class="gallery__nav gallery__nav--prev" aria-label="Previous">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button class="gallery__nav gallery__nav--next" aria-label="Next">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-            
-            <div class="gallery__track">
-              <!-- Первый набор -->
-              <div class="gallery__item" data-loaded="false">
-                <div class="gallery__iframe-wrapper">
-                  <iframe 
-                    data-src="https://stellular-syrniki-3e95d4.netlify.app/" 
-                    title="Chicken Road - Example 1"
-                    class="gallery__iframe"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="gallery__play-overlay">
-                    <div class="gallery__play-button">▶</div>
-                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
-                  </div>
-                </div>
-                <span class="gallery__label">Chicken Road Classic</span>
-              </div>
-              
-              <div class="gallery__item" data-loaded="false">
-                <div class="gallery__iframe-wrapper">
-                  <iframe 
-                    data-src="https://quiet-tanuki-d85533.netlify.app/" 
-                    title="Chicken Road - Example 2"
-                    class="gallery__iframe"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="gallery__play-overlay">
-                    <div class="gallery__play-button">▶</div>
-                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
-                  </div>
-                </div>
-                <span class="gallery__label">Chicken Road v2</span>
-              </div>
-              
-              <div class="gallery__item" data-loaded="false">
-                <div class="gallery__iframe-wrapper">
-                  <iframe 
-                    data-src="https://incomparable-dragon-1d5660.netlify.app/" 
-                    title="Chicken Road - Example 3"
-                    class="gallery__iframe"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="gallery__play-overlay">
-                    <div class="gallery__play-button">▶</div>
-                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
-                  </div>
-                </div>
-                <span class="gallery__label">Chicken Road Pro</span>
-              </div>
-              
-              <div class="gallery__item" data-loaded="false">
-                <div class="gallery__iframe-wrapper">
-                  <iframe 
-                    data-src="https://melodious-tartufo-9cd79f.netlify.app/" 
-                    title="Chicken Road - Example 4"
-                    class="gallery__iframe"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="gallery__play-overlay">
-                    <div class="gallery__play-button">▶</div>
-                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
-                  </div>
-                </div>
-                <span class="gallery__label">Chicken Road Plus</span>
-              </div>
-              
-              <div class="gallery__item" data-loaded="false">
-                <div class="gallery__iframe-wrapper">
-                  <iframe 
-                    data-src="https://chimerical-chimera-147208.netlify.app/" 
-                    title="Chicken Road - Example 5"
-                    class="gallery__iframe"
-                    allowfullscreen
-                  ></iframe>
-                  <div class="gallery__play-overlay">
-                    <div class="gallery__play-button">▶</div>
-                    <span class="gallery__play-text">Нажмите, чтобы играть</span>
-                  </div>
-                </div>
-                <span class="gallery__label">Chicken Road Deluxe</span>
               </div>
             </div>
           </div>
