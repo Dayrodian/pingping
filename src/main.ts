@@ -158,8 +158,7 @@ const headerCta = document.getElementById('headerCta');
 if (headerCta) {
   headerCta.addEventListener('click', () => {
     trackEvent('CTA', 'click', 'header');
-    // Здесь откроется модальный конструктор
-    alert('Модальный конструктор будет добавлен на следующем этапе! 🎮');
+    // Модальное окно открывается через initPricingModal()
   });
 }
 
@@ -168,8 +167,7 @@ const heroCta = document.getElementById('heroCta');
 if (heroCta) {
   heroCta.addEventListener('click', () => {
     trackEvent('CTA', 'click', 'hero');
-    // Здесь откроется модальный конструктор
-    alert('Модальный конструктор будет добавлен на следующем этапе! 🎮');
+    // Модальное окно открывается через initPricingModal()
   });
 }
 
@@ -179,7 +177,7 @@ if (mobileMenuCta) {
   mobileMenuCta.addEventListener('click', () => {
     trackEvent('CTA', 'click', 'mobile-menu');
     toggleMobileMenu();
-    alert('Модальный конструктор будет добавлен на следующем этапе! 🎮');
+    // Модальное окно открывается через initPricingModal()
   });
 }
 
@@ -297,9 +295,7 @@ if (continueGameBtn) {
 if (ctaOrderBtn) {
   ctaOrderBtn.addEventListener('click', () => {
     trackEvent('CTA', 'order', 'from-game');
-    // Прокручиваем к форме или открываем модалку конструктора
-    // Пока что просто alert
-    alert('Модальный конструктор будет добавлен на следующем этапе! 🎮');
+    // Модальное окно открывается через initPricingModal()
   });
 }
 
@@ -625,17 +621,134 @@ function initGallery() {
 }
 
 // ============================================
+// ❓ FAQ ACCORDION
+// ============================================
+
+function initFAQ() {
+  const faqItems = document.querySelectorAll('.faq__item');
+  
+  if (!faqItems.length) {
+    console.log('⚠️ FAQ items not found');
+    return;
+  }
+  
+  faqItems.forEach((item) => {
+    const question = item.querySelector('.faq__question');
+    
+    if (!question) return;
+    
+    question.addEventListener('click', () => {
+      const isActive = item.classList.contains('active');
+      
+      // Закрываем все остальные элементы
+      faqItems.forEach((otherItem) => {
+        if (otherItem !== item) {
+          otherItem.classList.remove('active');
+        }
+      });
+      
+      // Переключаем текущий элемент
+      item.classList.toggle('active');
+      
+      // Трекинг
+      if (!isActive) {
+        const questionText = item.querySelector('.faq__question-text')?.textContent || 'Unknown';
+        trackEvent('FAQ', 'open', questionText);
+      }
+    });
+  });
+  
+  console.log(`❓ FAQ initialized with ${faqItems.length} items`);
+}
+
+// ============================================
+// 🪟 PRICING MODAL
+// ============================================
+
+function initPricingModal() {
+  const modal = document.getElementById('pricingModal');
+  const modalClose = modal?.querySelector('.modal__close');
+  const modalOverlay = modal?.querySelector('.modal__overlay');
+  
+  if (!modal) {
+    console.log('⚠️ Pricing modal not found');
+    return;
+  }
+  
+  // Функция открытия модального окна
+  const openModal = (source: string) => {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Блокируем скролл страницы
+    trackEvent('Modal', 'open', source);
+    console.log(`🪟 Modal opened from: ${source}`);
+  };
+  
+  // Функция закрытия модального окна
+  const closeModal = () => {
+    modal.classList.remove('active');
+    document.body.style.overflow = ''; // Восстанавливаем скролл страницы
+    trackEvent('Modal', 'close', 'User action');
+    console.log('🪟 Modal closed');
+  };
+  
+  // Закрытие по кнопке X
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+  }
+  
+  // Закрытие по клику на overlay
+  if (modalOverlay) {
+    modalOverlay.addEventListener('click', closeModal);
+  }
+  
+  // Закрытие по ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+  
+  // Все кнопки, которые открывают модальное окно
+  const openModalButtons = [
+    document.getElementById('headerCta'),
+    document.querySelector('.hero__cta'),
+    document.querySelector('.pricing-trigger__button'),
+    document.querySelector('.open-pricing-modal'),
+    document.querySelector('.mobile-menu__cta'),
+    document.getElementById('footerCta'),
+    document.querySelector('.pricing__cta'), // Кнопка "Заказать базовый" внутри модального окна
+  ];
+  
+  openModalButtons.forEach((button) => {
+    if (button) {
+      button.addEventListener('click', () => {
+        const buttonText = button.textContent?.trim() || 'Unknown button';
+        openModal(buttonText);
+      });
+    }
+  });
+  
+  console.log('🪟 Pricing modal initialized');
+  console.log(`✅ Connected ${openModalButtons.filter(b => b).length} CTA buttons to modal`);
+}
+
+// ============================================
 // 🚀 INITIALIZATION
 // ============================================
 
 initCountdownTimer();
 initScrollEffects();
 initGallery();
+initFAQ();
+initPricingModal();
 
 console.log('🐔 Chicken Road Landing - Initialized!');
 console.log('⏰ Countdown timer: Active (7 days with Cookie)');
 console.log('🔥 Scroll effects: Active');
 console.log('🎮 Gallery: Manual navigation + Lazy loading (Performance optimized)');
+console.log('❓ FAQ: Accordion with smooth animations');
+console.log('🪟 Pricing Modal: All CTA buttons connected');
+console.log('🦶 Footer: Complete with CTA');
 console.log('📋 План разработки: DEVELOPMENT_PLAN.md');
 console.log('🎮 Game integration ready - добавьте игру в public/game/');
 
