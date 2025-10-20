@@ -520,29 +520,39 @@ function initGallery() {
   // Функция для закрытия всех игр кроме текущей
   function closeAllGamesExcept(currentItem: Element) {
     galleryItems.forEach((item) => {
-      if (item !== currentItem && item.getAttribute('data-loaded') === 'true') {
-        const iframe = item.querySelector('.gallery__iframe') as HTMLIFrameElement;
-        const overlay = item.querySelector('.gallery__play-overlay') as HTMLElement;
-        const preview = item.querySelector('.gallery__preview') as HTMLImageElement;
+      if (item !== currentItem) {
+        const isLoaded = item.getAttribute('data-loaded') === 'true';
         
-        if (iframe) {
+        if (isLoaded) {
+          const iframe = item.querySelector('.gallery__iframe') as HTMLIFrameElement;
+          const overlay = item.querySelector('.gallery__play-overlay') as HTMLElement;
+          const preview = item.querySelector('.gallery__preview') as HTMLImageElement;
+          const loading = item.querySelector('.gallery__loading') as HTMLElement;
+          
           // Останавливаем игру и сбрасываем src
-          iframe.src = '';
+          if (iframe) {
+            iframe.src = '';
+          }
+          
+          // ВАЖНО: Сбрасываем состояние загрузки ПЕРЕД восстановлением стилей
           item.setAttribute('data-loaded', 'false');
+          
+          // Скрываем спиннер загрузки если он активен
+          if (loading) {
+            loading.classList.remove('active');
+          }
+          
+          // ВАЖНО: Полностью удаляем inline стили, чтобы CSS снова работал
+          if (preview) {
+            preview.removeAttribute('style');
+          }
+          
+          if (overlay) {
+            overlay.removeAttribute('style');
+          }
+          
+          console.log(`🛑 Closed game, restored preview`);
         }
-        
-        // Показываем обратно превью и overlay
-        if (overlay) {
-          overlay.style.display = 'flex';
-          overlay.style.opacity = '1';
-        }
-        
-        if (preview) {
-          preview.style.opacity = '1';
-          preview.style.pointerEvents = 'all';
-        }
-        
-        console.log(`🛑 Closed game in item`);
       }
     });
   }
@@ -552,10 +562,35 @@ function initGallery() {
     const iframe = item.querySelector('.gallery__iframe') as HTMLIFrameElement;
     const overlay = item.querySelector('.gallery__play-overlay') as HTMLElement;
     const preview = item.querySelector('.gallery__preview') as HTMLImageElement;
+    const loading = item.querySelector('.gallery__loading') as HTMLElement;
     const label = item.querySelector('.gallery__label');
     const dataSrc = iframe?.getAttribute('data-src');
     
     if (!iframe || !overlay || !dataSrc) return;
+    
+    // Обработчик загрузки iframe
+    iframe.addEventListener('load', () => {
+      if (iframe.src && iframe.src !== '') {
+        // Скрываем спиннер загрузки
+        if (loading) {
+          loading.classList.remove('active');
+        }
+        
+        // ВАЖНО: НЕ используем inline стили!
+        // CSS автоматически скроет превью через data-loaded="true"
+        // Просто скрываем overlay
+        setTimeout(() => {
+          if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+              overlay.style.display = 'none';
+            }, 300);
+          }
+        }, 100);
+        
+        console.log(`✅ Game iframe loaded: ${label?.textContent || `Example ${index + 1}`}`);
+      }
+    });
     
     // Клик по overlay - загружаем и запускаем игру
     overlay.addEventListener('click', (e) => {
@@ -568,21 +603,18 @@ function initGallery() {
       const isLoaded = item.getAttribute('data-loaded') === 'true';
       
       if (!isLoaded) {
+        // Показываем спиннер загрузки
+        if (loading) {
+          loading.classList.add('active');
+        }
+        
         // Загружаем игру
         iframe.src = dataSrc;
         item.setAttribute('data-loaded', 'true');
         
         const gameTitle = label?.textContent || `Example ${index + 1}`;
         trackEvent('Gallery', 'play', gameTitle);
-        console.log(`🎮 Game loaded and started: ${gameTitle}`);
-        
-        // Плавное исчезновение overlay и preview
-        setTimeout(() => {
-          overlay.style.opacity = '0';
-          setTimeout(() => {
-            overlay.style.display = 'none';
-          }, 300);
-        }, 100);
+        console.log(`🎮 Game loading started: ${gameTitle}`);
       }
     });
   });
