@@ -149,9 +149,15 @@ function initCountdownTimer() {
 function trackEvent(category: string, action: string, label?: string) {
   console.log(`[Analytics] ${category} - ${action}${label ? ` - ${label}` : ''}`);
   
-  // Здесь будет интеграция с GA4 / Yandex Metrica
-  // gtag?.('event', action, { category, label });
-  // ym?.(COUNTER_ID, 'reachGoal', action);
+  // Интеграция с Яндекс.Метрикой
+  const goalName = `${category}_${action}`.toUpperCase();
+  if (typeof (window as any).ym !== 'undefined') {
+    (window as any).ym(105603596, 'reachGoal', goalName, {
+      category,
+      action,
+      label
+    });
+  }
 }
 
 // Header CTA
@@ -782,6 +788,31 @@ initGallery();
 initFAQ();
 initPricingModal();
 
+// ============================================
+// 📊 TELEGRAM & ADDITIONAL TRACKING
+// ============================================
+
+// Отслеживание клика по Telegram в футере
+const telegramLinks = document.querySelectorAll('a[href*="t.me"]');
+telegramLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    trackEvent('Contact', 'click', 'Telegram');
+  });
+});
+
+// Отслеживание клика по email
+const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+emailLinks.forEach((link) => {
+  link.addEventListener('click', () => {
+    trackEvent('Contact', 'click', 'Email');
+  });
+});
+
+// Отслеживание открытия главной страницы
+if (typeof (window as any).ym !== 'undefined') {
+  (window as any).ym(105603596, 'reachGoal', 'PAGE_VIEW');
+}
+
 console.log('🐔 Chicken Road Landing - Initialized!');
 console.log('⏰ Countdown timer: Active (7 days with Cookie)');
 console.log('🔥 Scroll effects: Active');
@@ -789,6 +820,7 @@ console.log('🎮 Gallery: Manual navigation + Lazy loading (Performance optimiz
 console.log('❓ FAQ: Accordion with smooth animations');
 console.log('🪟 Pricing Modal: All CTA buttons connected');
 console.log('🦶 Footer: Complete with CTA');
+console.log('📊 Yandex.Metrika: Goals tracking active');
 console.log('📋 План разработки: DEVELOPMENT_PLAN.md');
 console.log('🎮 Game integration ready - добавьте игру в public/game/');
 

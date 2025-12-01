@@ -1637,6 +1637,10 @@
 
         // Обработчик кнопки сброса
         resetButton.addEventListener('click', () => {
+            // Цель Яндекс.Метрики: Сброс всего
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'RESET_ALL');
+            }
             location.reload();
         });
         
@@ -1745,6 +1749,14 @@
                 : 'Заказ пуст';
             
             navigator.clipboard.writeText(orderText).then(() => {
+                // Цель Яндекс.Метрики: Копирование заказа
+                if (typeof ym !== 'undefined') {
+                    ym(105603596, 'reachGoal', 'ORDER_COPY', {
+                        order_price: totalPrice,
+                        order_items: items.length
+                    });
+                }
+                
                 const originalText = copyButton.querySelector('.copy-text').textContent;
                 copyButton.classList.add('copied');
                 copyButton.querySelector('.copy-text').textContent = '✓ Скопировано!';
@@ -2224,6 +2236,13 @@
 
         // Обработчик смены курочки через select
         chickenSelect.addEventListener('change', () => {
+            // Цель Яндекс.Метрики: Смена курочки
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'CHICKEN_CHANGE', {
+                    chicken_type: chickenSelect.value
+                });
+            }
+            
             // Обновляем чекбокс и цену
             const isOriginal = chickenSelect.value === 'images_extracted';
             handleAssetChange(chickenSelect, checkboxChicken, 'chicken', isOriginal);
@@ -2250,6 +2269,13 @@
 
         // Обработчик смены дороги через select
         roadSelect.addEventListener('change', () => {
+            // Цель Яндекс.Метрики: Смена дороги
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'ROAD_CHANGE', {
+                    road_type: roadSelect.value
+                });
+            }
+            
             // Обновляем чекбокс и цену
             const isOriginal = roadSelect.value === 'original';
             handleAssetChange(roadSelect, checkboxRoad, 'road', isOriginal);
@@ -2275,6 +2301,13 @@
 
         // Обработчик смены целей через select
         stagesSelect.addEventListener('change', () => {
+            // Цель Яндекс.Метрики: Смена люков
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'STAGES_CHANGE', {
+                    stages_type: stagesSelect.value
+                });
+            }
+            
             // Обновляем чекбокс и цену
             const isOriginal = stagesSelect.value === 'original';
             handleAssetChange(stagesSelect, checkboxStages, 'stages', isOriginal);
@@ -2295,6 +2328,13 @@
 
         // Обработчик смены колеса через select
         wheelSelect.addEventListener('change', () => {
+            // Цель Яндекс.Метрики: Смена колеса
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'WHEEL_CHANGE', {
+                    wheel_type: wheelSelect.value
+                });
+            }
+            
             // Обновляем чекбокс и цену
             const isOriginal = wheelSelect.value === 'original';
             handleAssetChange(wheelSelect, checkboxWheel, 'wheel', isOriginal);
@@ -2321,6 +2361,13 @@
 
         // Обработчик смены стрелки через select
         arrowSelect.addEventListener('change', () => {
+            // Цель Яндекс.Метрики: Смена стрелки
+            if (typeof ym !== 'undefined') {
+                ym(105603596, 'reachGoal', 'ARROW_CHANGE', {
+                    arrow_type: arrowSelect.value
+                });
+            }
+            
             // Обновляем чекбокс и цену
             const isOriginal = arrowSelect.value === 'original';
             handleAssetChange(arrowSelect, checkboxArrow, 'arrow', isOriginal);
@@ -2460,6 +2507,13 @@
                 const langName = e.target.nextElementSibling.textContent.trim();
                 
                 if (e.target.checked) {
+                    // Цель Яндекс.Метрики: Выбор языка
+                    if (typeof ym !== 'undefined') {
+                        ym(105603596, 'reachGoal', 'LANGUAGE_SELECT', {
+                            language: langName
+                        });
+                    }
+                    
                     // Добавляем язык в список
                     selectedItems.languages.push(langName);
                     // Добавляем цену
@@ -2592,6 +2646,22 @@
                     mobileMenu.classList.remove('active');
                 }
             });
+        }
+        
+        // Отслеживание клика по Telegram
+        const telegramLink = document.querySelector('.telegram-link');
+        if (telegramLink) {
+            telegramLink.addEventListener('click', () => {
+                // Цель Яндекс.Метрики: Клик по Telegram
+                if (typeof ym !== 'undefined') {
+                    ym(105603596, 'reachGoal', 'TELEGRAM_CLICK');
+                }
+            });
+        }
+        
+        // Отслеживание открытия конструктора (при загрузке страницы)
+        if (typeof ym !== 'undefined') {
+            ym(105603596, 'reachGoal', 'CONSTRUCTOR_OPEN');
         }
     </script>
 </body>
