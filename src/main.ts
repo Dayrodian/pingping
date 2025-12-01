@@ -762,7 +762,6 @@ function initPricingModal() {
     document.querySelector('.open-pricing-modal'),
     document.querySelector('.mobile-menu__cta'),
     document.getElementById('footerCta'),
-    document.querySelector('.pricing__cta'), // Кнопка "Заказать базовый" внутри модального окна
   ];
   
   openModalButtons.forEach((button) => {
@@ -774,8 +773,18 @@ function initPricingModal() {
     }
   });
   
+  // Кнопка "Заказать базовый" - редирект на конструктор
+  const orderBasicButton = document.querySelector('.pricing__cta');
+  if (orderBasicButton) {
+    orderBasicButton.addEventListener('click', () => {
+      trackEvent('CTA', 'click', 'Order Basic - Redirect to Constructor');
+      window.location.href = '/asset_previewer.html';
+    });
+  }
+  
   console.log('🪟 Pricing modal initialized');
   console.log(`✅ Connected ${openModalButtons.filter(b => b).length} CTA buttons to modal`);
+  console.log('✅ Order Basic button redirects to constructor');
 }
 
 // ============================================
