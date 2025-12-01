@@ -58,7 +58,8 @@ mobileMenuLinks.forEach(link => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href') as string);
+    const currentTarget = e.currentTarget as HTMLAnchorElement;
+    const target = document.querySelector(currentTarget.getAttribute('href') as string);
     if (target) {
       const headerHeight = header.offsetHeight;
       const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
@@ -532,6 +533,8 @@ function initGallery() {
           // Останавливаем игру и сбрасываем src
           if (iframe) {
             iframe.src = '';
+            // Убираем inline стили с iframe
+            iframe.removeAttribute('style');
           }
           
           // ВАЖНО: Сбрасываем состояние загрузки ПЕРЕД восстановлением стилей
@@ -576,24 +579,20 @@ function initGallery() {
           loading.classList.remove('active');
         }
         
-        // ВАЖНО: НЕ используем inline стили!
-        // CSS автоматически скроет превью через data-loaded="true"
-        // Просто скрываем overlay
-        setTimeout(() => {
-          if (overlay) {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-              overlay.style.display = 'none';
-            }, 300);
-          }
-        }, 100);
+        // CSS автоматически скрывает overlay и preview через data-loaded="true"
+        // Не устанавливаем inline стили, чтобы CSS мог восстановить их через data-loaded="false"
         
-        console.log(`✅ Game iframe loaded: ${label?.textContent || `Example ${index + 1}`}`);
+        setTimeout(() => {
+          console.log(`✅ Game iframe loaded: ${label?.textContent || `Example ${index + 1}`}`);
+          console.log(`   CSS управляет видимостью через data-loaded="${item.getAttribute('data-loaded')}"`);
+          console.log(`   📱 Проверьте что overlay и preview скрыты через CSS`);
+        }, 300);
       }
     });
     
-    // Клик по overlay - загружаем и запускаем игру
-    overlay.addEventListener('click', (e) => {
+    // Функция загрузки игры
+    const loadGame = (e: Event) => {
+      e.preventDefault();
       e.stopPropagation();
       
       // ВАЖНО: Закрываем все остальные игры перед открытием новой
@@ -608,6 +607,11 @@ function initGallery() {
           loading.classList.add('active');
         }
         
+        // Добавляем необходимые атрибуты для корректной работы iframe (только один раз)
+        if (!iframe.getAttribute('allow')) {
+          iframe.setAttribute('allow', 'autoplay; fullscreen');
+        }
+        
         // Загружаем игру
         iframe.src = dataSrc;
         item.setAttribute('data-loaded', 'true');
@@ -616,7 +620,11 @@ function initGallery() {
         trackEvent('Gallery', 'play', gameTitle);
         console.log(`🎮 Game loading started: ${gameTitle}`);
       }
-    });
+    };
+    
+    // Обработчики для десктопа и мобильных устройств
+    overlay.addEventListener('click', loadGame);
+    overlay.addEventListener('touchend', loadGame);
   });
   
   // Обновляем текущий индекс при ручной прокрутке

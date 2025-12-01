@@ -217,6 +217,7 @@ img {
   padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
   font-size: var(--font-size-base);
   font-weight: 700;
+  border: none;
   border-radius: var(--radius-lg);
   transition: all var(--transition-base);
   white-space: nowrap;
@@ -418,6 +419,13 @@ img {
 
 .nav__link:hover::after {
   width: 100%;
+}
+
+.header__cta {
+  white-space: nowrap;
+  font-size: clamp(0.65rem, 1.2vw + 0.4rem, 0.85rem);
+  padding: clamp(0.5rem, 1.2vw, 0.75rem) clamp(0.875rem, 2vw, 1.25rem);
+  max-width: max-content;
 }
 
 .header__burger {
@@ -1463,6 +1471,7 @@ img {
   box-shadow: none; /* Убрана тень */
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   background: linear-gradient(135deg, rgba(255, 249, 235, 0.5) 0%, rgba(255, 255, 255, 0.5) 100%);
+  pointer-events: auto; /* Разрешаем события для детей */
 }
 
 /* Hover состояние */
@@ -1471,6 +1480,17 @@ img {
   box-shadow: none; /* Без тени даже при hover */
 }
 
+/* Когда игра загружена - убираем hover эффекты */
+.gallery__item[data-loaded="true"]:hover .gallery__iframe-wrapper {
+  transform: none; /* Не трансформируем загруженную игру */
+}
+
+.gallery__item[data-loaded="true"] .gallery__iframe-wrapper {
+  pointer-events: auto; /* Явно разрешаем взаимодействие */
+  user-select: auto; /* Разрешаем выделение текста в игре */
+  -webkit-user-select: auto;
+  touch-action: auto; /* Разрешаем все touch события */
+}
 
 /* Iframe */
 .gallery__iframe {
@@ -1481,10 +1501,19 @@ img {
   background: white;
   opacity: 0;
   transition: opacity 0.3s ease;
+  touch-action: auto; /* Разрешаем все touch-взаимодействия внутри iframe */
+  pointer-events: auto; /* Убеждаемся что pointer events работают */
+  position: relative;
+  z-index: 2; /* Выше превью, но ниже overlay */
 }
 
 .gallery__item[data-loaded="true"] .gallery__iframe {
   opacity: 1;
+  z-index: 4; /* После загрузки - выше всех */
+  pointer-events: auto !important; /* Явно разрешаем взаимодействие */
+  user-select: auto; /* Разрешаем выделение */
+  -webkit-user-select: auto;
+  touch-action: auto !important; /* Разрешаем все touch действия */
 }
 
 /* Preview Image */
@@ -1503,6 +1532,8 @@ img {
 .gallery__item[data-loaded="true"] .gallery__preview {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden; /* Полностью скрываем */
+  display: none; /* Убираем из потока */
 }
 
 /* Play Overlay */
@@ -1521,11 +1552,15 @@ img {
   cursor: pointer;
   transition: all 0.3s ease;
   z-index: 3; /* Выше превью */
+  touch-action: manipulation; /* Оптимизация для touch-устройств */
+  -webkit-tap-highlight-color: transparent; /* Убираем подсветку при тапе на iOS */
 }
 
 .gallery__item[data-loaded="true"] .gallery__play-overlay {
   opacity: 0;
   pointer-events: none;
+  visibility: hidden; /* Полностью скрываем */
+  display: none; /* Убираем из потока */
 }
 
 .gallery__play-overlay:hover {
@@ -1713,7 +1748,7 @@ img {
   
   /* Gallery Mobile */
   .gallery__item {
-    width: clamp(13rem, 42vw, 17rem); /* Уменьшено для планшетов: 2 карточки без обрезания */
+    width: clamp(12rem, 40vw, 16rem); /* Уменьшено для планшетов: 2 карточки без обрезания */
   }
   
   .gallery__track {
@@ -1757,7 +1792,7 @@ img {
   
   /* Gallery Small Mobile */
   .gallery__item {
-    width: clamp(15rem, 82vw, 19rem); /* Уменьшено для мобильных: 1 карточка без обрезания */
+    width: clamp(12rem, 70vw, 16rem); /* Уменьшено для мобильных: 1 карточка полностью видна */
   }
   
   .gallery__track {
