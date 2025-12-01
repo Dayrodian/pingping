@@ -4,7 +4,7 @@ export default defineConfig({
   assetsInclude: ['**/*.glb', '**/*.gltf'],
   build: {
     target: 'es2015',
-    minify: 'terser',
+    minify: 'esbuild',
     cssMinify: true,
     assetsInlineLimit: 50000000, // 50MB для инлайна ассетов
   },
