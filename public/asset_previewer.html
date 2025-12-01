@@ -2634,7 +2634,7 @@
 
         if (burgerBtn && mobileMenu && mobileMenuClose) {
             burgerBtn.addEventListener('click', () => {
-                mobileMenu.classList.add('active');
+                mobileMenu.classList.toggle('active');
             });
 
             mobileMenuClose.addEventListener('click', () => {
