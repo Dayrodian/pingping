@@ -3,7 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asset Previewer - Конструктор</title>
+    <title>PING — Конструктор Playable креативов</title>
+    <meta name="description" content="Конструктор playable креативов Chicken Road. Выберите персонажа, настройте параметры и получите готовый плейбл за 24 часа.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pingping-ashy.vercel.app/asset_previewer.html">
+    <meta property="og:title" content="PING — Конструктор Playable креативов">
+    <meta property="og:description" content="Соберите свой плейбл Chicken Road. Выберите персонажа, настройте параметры — готово за 24 часа.">
+    <meta property="og:image" content="https://pingping-ashy.vercel.app/images/gallery/preview_1.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="PING Playables">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PING — Конструктор Playable креативов">
+    <meta name="twitter:description" content="Соберите свой плейбл Chicken Road за 24 часа.">
+    <meta name="twitter:image" content="https://pingping-ashy.vercel.app/images/gallery/preview_1.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -786,41 +805,33 @@
             padding: clamp(1.5rem, 3vmin, 2rem);
             position: relative;
             border-radius: clamp(1rem, 2.5vmin, 1.5rem);
-            background: linear-gradient(135deg, #4a4a4a 0%, #2d2d2d 100%);
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            box-shadow: 0 clamp(0.5rem, 1.5vmin, 0.75rem) clamp(2rem, 5vmin, 3rem) rgba(0, 0, 0, 0.5),
-                        inset 0 clamp(0.125rem, 0.5vmin, 0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 215, 0, 0.15),
-                        inset 0 clamp(-0.125rem, -0.5vmin, -0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(0, 0, 0, 0.5);
+            box-shadow: 0 clamp(0.5rem, 1.5vmin, 0.75rem) clamp(2rem, 5vmin, 3rem) rgba(255, 152, 0, 0.4),
+                        inset 0 clamp(0.125rem, 0.5vmin, 0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 255, 255, 0.3),
+                        inset 0 clamp(-0.125rem, -0.5vmin, -0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 107, 0, 0.3);
             overflow: hidden;
+            animation: customOfferPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes customOfferPulse {
+            0%, 100% {
+                box-shadow: 0 clamp(0.5rem, 1.5vmin, 0.75rem) clamp(2rem, 5vmin, 3rem) rgba(255, 152, 0, 0.4),
+                            inset 0 clamp(0.125rem, 0.5vmin, 0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 255, 255, 0.3),
+                            inset 0 clamp(-0.125rem, -0.5vmin, -0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 107, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 clamp(0.75rem, 2vmin, 1rem) clamp(2.5rem, 6vmin, 4rem) rgba(255, 152, 0, 0.6),
+                            inset 0 clamp(0.125rem, 0.5vmin, 0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 255, 255, 0.4),
+                            inset 0 clamp(-0.125rem, -0.5vmin, -0.25rem) clamp(0.5rem, 1.5vmin, 1rem) rgba(255, 107, 0, 0.4);
+            }
         }
 
         .magic-border {
-            position: absolute;
-            top: -4px;
-            left: -4px;
-            right: -4px;
-            bottom: -4px;
-            border-radius: clamp(1.125rem, 2.75vmin, 1.625rem);
-            background: linear-gradient(90deg, 
-                #E8D4A0 0%, 
-                #D4BD87 10%,
-                #E8D4A0 20%,
-                #C9B389 30%,
-                #E8D4A0 40%,
-                #D4A574 50%,
-                #E8D4A0 60%,
-                #C9B389 70%,
-                #E8D4A0 80%,
-                #D4BD87 90%,
-                #E8D4A0 100%);
-            background-size: 300% 300%;
-            animation: premiumGoldFlow 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
-            z-index: -1;
-            box-shadow: 0 0 clamp(1rem, 3vmin, 2rem) rgba(232, 212, 160, 0.4),
-                        0 0 clamp(2rem, 5vmin, 3rem) rgba(232, 212, 160, 0.2);
+            display: none; /* Скрываем старую рамку */
         }
 
         @keyframes premiumGoldFlow {
@@ -851,65 +862,14 @@
             font-size: clamp(1rem, 2.5vmin, 1.25rem);
             font-weight: 800;
             letter-spacing: clamp(0.03125rem, 0.1vmin, 0.0625rem);
-            background: linear-gradient(
-                90deg,
-                #FFFFFF 0%,
-                #E8D4A0 5%,
-                #F5EDD8 10%,
-                #E8D4A0 15%,
-                #C9B389 20%,
-                #E8D4A0 25%,
-                #FFFFFF 30%,
-                #C0C0C0 35%,
-                #E8E8E8 40%,
-                #FFFFFF 45%,
-                #E8D4A0 50%,
-                #FFFFFF 55%,
-                #E8E8E8 60%,
-                #C0C0C0 65%,
-                #FFFFFF 70%,
-                #E8D4A0 75%,
-                #C9B389 80%,
-                #E8D4A0 85%,
-                #F5EDD8 90%,
-                #E8D4A0 95%,
-                #FFFFFF 100%
-            );
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: eliteSweep 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            color: #2c3e50;
             line-height: 1.6;
             position: relative;
             z-index: 1;
-            filter: drop-shadow(0 0 clamp(0.625rem, 2vmin, 1.25rem) rgba(232, 212, 160, 0.5))
-                    drop-shadow(0 0 clamp(1.25rem, 3vmin, 2rem) rgba(232, 212, 160, 0.3))
-                    drop-shadow(0 clamp(0.1875rem, 0.75vmin, 0.375rem) clamp(0.375rem, 1.25vmin, 0.75rem) rgba(0, 0, 0, 0.4));
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
         }
 
-        .custom-text::before {
-            content: attr(data-text);
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255, 255, 255, 0.8) 45%,
-                rgba(255, 255, 255, 1) 50%,
-                rgba(255, 255, 255, 0.8) 55%,
-                transparent 100%
-            );
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: luxuryGlint 6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            z-index: 2;
-        }
+        /* Псевдоэлемент убран - используем простой стиль */
 
         @keyframes eliteSweep {
             0% {
@@ -1289,6 +1249,140 @@
     <!-- /Yandex.Metrika counter -->
 </head>
 <body>
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+      <div class="preloader__content">
+        <div class="preloader__logo">PING</div>
+        <div class="preloader__spinner">
+          <div class="spinner__ring"></div>
+          <div class="spinner__ring"></div>
+          <div class="spinner__ring"></div>
+        </div>
+        <div class="preloader__text">Загрузка конструктора...</div>
+      </div>
+    </div>
+    
+    <style>
+      .preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #FFFDF8 0%, #FFF9E8 50%, #FFFDF8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.5s ease, visibility 0.5s ease;
+      }
+      
+      .preloader.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      
+      .preloader__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: clamp(1.5rem, 3vh, 2rem);
+      }
+      
+      .preloader__logo {
+        font-family: 'Fredoka', 'Nunito', sans-serif;
+        font-size: clamp(2.5rem, 8vw, 4rem);
+        font-weight: 800;
+        background: linear-gradient(135deg, #FFC107 0%, #FF9800 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: preloader-pulse 2s ease-in-out infinite;
+      }
+      
+      @keyframes preloader-pulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.05); opacity: 0.8; }
+      }
+      
+      .preloader__spinner {
+        position: relative;
+        width: clamp(60px, 15vw, 80px);
+        height: clamp(60px, 15vw, 80px);
+      }
+      
+      .spinner__ring {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: clamp(3px, 0.8vw, 4px) solid transparent;
+      }
+      
+      .spinner__ring:nth-child(1) {
+        border-top-color: #FFC107;
+        animation: spin 1.2s linear infinite;
+      }
+      
+      .spinner__ring:nth-child(2) {
+        border-right-color: #FF9800;
+        animation: spin 1.2s linear infinite 0.15s;
+        width: 80%;
+        height: 80%;
+        top: 10%;
+        left: 10%;
+      }
+      
+      .spinner__ring:nth-child(3) {
+        border-bottom-color: #FF5722;
+        animation: spin 1.2s linear infinite 0.3s reverse;
+        width: 60%;
+        height: 60%;
+        top: 20%;
+        left: 20%;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .preloader__text {
+        font-family: 'Nunito', sans-serif;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        color: #7f8c8d;
+        font-weight: 600;
+        animation: dots 1.5s ease-in-out infinite;
+      }
+      
+      @keyframes dots {
+        0%, 20% { opacity: 0.4; }
+        50% { opacity: 1; }
+        80%, 100% { opacity: 0.4; }
+      }
+    </style>
+    
+    <script>
+      // Скрываем прелоадер после загрузки
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          var preloader = document.getElementById('preloader');
+          if (preloader) {
+            preloader.classList.add('hidden');
+            setTimeout(function() { preloader.remove(); }, 500);
+          }
+        }, 300);
+      });
+      // Fallback
+      setTimeout(function() {
+        var preloader = document.getElementById('preloader');
+        if (preloader) preloader.classList.add('hidden');
+      }, 5000);
+    </script>
+
     <!-- Yandex.Metrika noscript -->
     <noscript>
         <div><img src="https://mc.yandex.ru/watch/105603596" style="position:absolute; left:-9999px;" alt="" /></div>
@@ -1300,7 +1394,6 @@
         <div class="container">
             <div class="header__content">
                 <a href="/" class="header__logo">
-                    <span class="logo__icon">🐔</span>
                     <span class="logo__text">PING</span>
                 </a>
                 

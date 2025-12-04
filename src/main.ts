@@ -1,6 +1,32 @@
 import './style.css';
 
 // ============================================
+// 🔄 PRELOADER
+// ============================================
+
+const preloader = document.getElementById('preloader');
+
+// Скрываем прелоадер после загрузки
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    if (preloader) {
+      preloader.classList.add('hidden');
+      // Удаляем из DOM после анимации
+      setTimeout(() => {
+        preloader.remove();
+      }, 500);
+    }
+  }, 300); // Небольшая задержка для плавности
+});
+
+// Fallback - скрыть через 5 секунд в любом случае
+setTimeout(() => {
+  if (preloader && !preloader.classList.contains('hidden')) {
+    preloader.classList.add('hidden');
+  }
+}, 5000);
+
+// ============================================
 // 🎯 HEADER NAVIGATION
 // ============================================
 
@@ -754,37 +780,37 @@ function initPricingModal() {
     }
   });
   
-  // Все кнопки, которые открывают модальное окно
-  const openModalButtons = [
+  // CTA кнопки теперь являются ссылками на конструктор
+  // Трекинг кликов сохраняем
+  const ctaLinks = [
     document.getElementById('headerCta'),
     document.querySelector('.hero__cta'),
     document.querySelector('.pricing-trigger__button'),
-    document.querySelector('.open-pricing-modal'),
     document.querySelector('.mobile-menu__cta'),
     document.getElementById('footerCta'),
   ];
   
-  openModalButtons.forEach((button) => {
-    if (button) {
-      button.addEventListener('click', () => {
-        const buttonText = button.textContent?.trim() || 'Unknown button';
-        openModal(buttonText);
+  ctaLinks.forEach((link) => {
+    if (link) {
+      link.addEventListener('click', () => {
+        const linkText = link.textContent?.trim() || 'CTA';
+        trackEvent('CTA', 'click', linkText);
       });
     }
   });
   
-  // Кнопка "Заказать базовый" - редирект на конструктор
+  // Кнопка "Заказать креатив" - открывает Telegram
   const orderBasicButton = document.querySelector('.pricing__cta');
   if (orderBasicButton) {
     orderBasicButton.addEventListener('click', () => {
-      trackEvent('CTA', 'click', 'Order Basic - Redirect to Constructor');
-      window.location.href = '/asset_previewer.html';
+      trackEvent('CTA', 'click', 'Order Basic - Telegram');
+      window.open('https://t.me/PINGPlayables', '_blank');
     });
   }
   
   console.log('🪟 Pricing modal initialized');
-  console.log(`✅ Connected ${openModalButtons.filter(b => b).length} CTA buttons to modal`);
-  console.log('✅ Order Basic button redirects to constructor');
+  console.log(`✅ Connected ${ctaLinks.filter(b => b).length} CTA links to constructor`);
+  console.log('✅ Order button opens Telegram');
 }
 
 // ============================================

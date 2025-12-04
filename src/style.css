@@ -1746,18 +1746,27 @@ img {
     padding: clamp(0.5rem, 1vw, 0.75rem);
   }
   
-  /* Gallery Mobile */
+  /* Gallery Tablet - центрированные карточки */
+  .gallery__carousel {
+    padding: clamp(1.5rem, 3vh, 2rem) clamp(1rem, 2vw, 1.5rem);
+  }
+  
   .gallery__item {
-    width: clamp(12rem, 40vw, 16rem); /* Уменьшено для планшетов: 2 карточки без обрезания */
+    /* Карточка занимает ~45% экрана минус padding - помещается 2 шт */
+    width: calc(45vw - 1rem);
+    min-width: 14rem;
+    max-width: 18rem;
   }
   
   .gallery__track {
     gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 2vh, 1.5rem) clamp(1rem, 2vw, 1.5rem);
+    scroll-padding-left: clamp(1rem, 2vw, 1.5rem);
   }
   
   .gallery__nav {
-    width: clamp(2rem, 4vw, 2.5rem);
-    height: clamp(2rem, 4vw, 2.5rem);
+    width: clamp(2.25rem, 4.5vw, 2.75rem);
+    height: clamp(2.25rem, 4.5vw, 2.75rem);
   }
   
   .gallery__nav--prev {
@@ -1765,7 +1774,7 @@ img {
   }
   
   .gallery__nav--next {
-    right: clamp(2rem, 4vw, 3rem);
+    right: clamp(0.25rem, 0.5vw, 0.5rem);
   }
 }
 
@@ -1790,32 +1799,56 @@ img {
     height: clamp(3.5rem, 7vw, 4.5rem);
   }
   
-  /* Gallery Small Mobile */
+  /* Gallery Mobile - 1 карточка на весь экран, без обрезания */
+  .gallery {
+    padding: clamp(2rem, 4vh, 3rem) 0;
+  }
+  
+  .gallery__carousel {
+    padding: clamp(1rem, 2vh, 1.5rem) 0;
+  }
+  
   .gallery__item {
-    width: clamp(12rem, 70vw, 16rem); /* Уменьшено для мобильных: 1 карточка полностью видна */
+    /* Карточка занимает почти весь экран минус отступы */
+    width: calc(100vw - 4rem);
+    min-width: auto;
+    max-width: 20rem;
+    margin: 0 auto;
   }
   
   .gallery__track {
-    gap: clamp(0.75rem, 1.5vw, 1rem);
-    padding: clamp(0.75rem, 1.5vh, 1rem) clamp(1.5rem, 3vw, 2rem);
+    gap: clamp(1rem, 2vw, 1.5rem);
+    padding: clamp(1rem, 2vh, 1.5rem) 2rem;
+    scroll-padding-left: 2rem;
+    /* Snap для центрирования карточки */
+    scroll-snap-type: x mandatory;
+  }
+  
+  .gallery__item {
+    scroll-snap-align: center;
   }
   
   .gallery__nav {
-    width: clamp(1.75rem, 3.5vw, 2rem);
-    height: clamp(1.75rem, 3.5vw, 2rem);
+    width: clamp(2rem, 8vw, 2.5rem);
+    height: clamp(2rem, 8vw, 2.5rem);
   }
   
   .gallery__nav--prev {
-    left: clamp(0.125rem, 0.25vw, 0.25rem);
+    left: 0.5rem;
   }
   
   .gallery__nav--next {
-    right: clamp(1.5rem, 3vw, 2rem);
+    right: 0.5rem;
   }
   
   .gallery__play-button {
-    width: clamp(2.5rem, 5vw, 3rem);
-    height: clamp(2.5rem, 5vw, 3rem);
+    width: clamp(3rem, 12vw, 4rem);
+    height: clamp(3rem, 12vw, 4rem);
+  }
+  
+  .gallery__label {
+    font-size: clamp(0.8rem, 3.5vw, 1rem);
+    padding: clamp(0.5rem, 2vw, 0.75rem);
   }
 }
 
